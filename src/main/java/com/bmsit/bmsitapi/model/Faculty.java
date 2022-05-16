@@ -30,4 +30,5 @@ public class Faculty {
 
     @Embedded
     private Address address;
+    private String department;
 }
