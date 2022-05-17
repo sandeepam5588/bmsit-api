@@ -5,14 +5,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Embeddable;
+import javax.persistence.*;
+
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Embeddable
+@Entity
 public class Address {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
     private String addressLine1;
     private String addressLine2;
     private String street;
@@ -20,4 +24,12 @@ public class Address {
     private String state;
     private String country;
     private int zipCode;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id", nullable = false)
+    private Student student;
+
+    @ManyToOne
+    @JoinColumn(name = "faculty_id",nullable = false)
+    private Faculty faculty;
 }

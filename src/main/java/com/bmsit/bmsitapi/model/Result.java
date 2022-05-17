@@ -1,5 +1,6 @@
 package com.bmsit.bmsitapi.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +21,8 @@ public class Result {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private Student student;
+   // private Student student;
+   @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfAnnouncement;
     private String academicYear;
     private int semester;

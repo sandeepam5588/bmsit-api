@@ -23,5 +23,5 @@ public class Course {
     private String code;
     private int duration;
 
-    private Department department;
+   // private Department department;
 }

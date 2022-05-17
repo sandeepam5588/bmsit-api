@@ -1,16 +1,14 @@
 package com.bmsit.bmsitapi.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -23,8 +21,16 @@ public class Department {
     private int id;
     private String departmentName;
     private String departmentCode;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfCommence;
     private String hod;
 
-    private List<Course> courses;
+    // One department can have one or more faculty
+    @OneToMany(mappedBy = "department", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    private Set<Faculty> faculties;
+
+    @OneToMany(mappedBy = "department", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    private Set<Student> students;
+
+    //private List<Course> courses;
 }

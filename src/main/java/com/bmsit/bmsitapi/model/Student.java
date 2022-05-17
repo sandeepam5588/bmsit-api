@@ -1,15 +1,14 @@
 package com.bmsit.bmsitapi.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -22,11 +21,19 @@ public class Student {
     private int id;
     private String studentName;
     private String RegisterNumber;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfBirth;
     private String course;
-    private String Department;
+
+    //many students belong to one department
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
+
     private String email;
     private String phoneNumber;
-    private Address address;
     private String gender;
+
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    private List<Address> address;
 }
