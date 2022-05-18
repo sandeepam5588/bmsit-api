@@ -19,21 +19,23 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
     private String studentName;
-    private String RegisterNumber;
+
+    private String registerNumber;
+
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfBirth;
+
     private String course;
 
-    //many students belong to one department
-    @ManyToOne
-    @JoinColumn(name = "department_id")
-    private Department department;
-
     private String email;
+
     private String phoneNumber;
+
     private String gender;
 
-    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @ElementCollection
+    @Embedded
     private List<Address> address;
 }

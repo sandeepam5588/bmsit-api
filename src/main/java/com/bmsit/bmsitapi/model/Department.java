@@ -18,19 +18,15 @@ import java.util.Set;
 public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private int departmentId;
+
     private String departmentName;
+
     private String departmentCode;
+
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfCommence;
+
     private String hod;
 
-    // One department can have one or more faculty
-    @OneToMany(mappedBy = "department", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    private Set<Faculty> faculties;
-
-    @OneToMany(mappedBy = "department", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    private Set<Student> students;
-
-    //private List<Course> courses;
 }

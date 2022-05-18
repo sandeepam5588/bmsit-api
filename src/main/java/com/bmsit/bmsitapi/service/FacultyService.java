@@ -21,7 +21,7 @@ public class FacultyService {
             FacultyResponseVO f = FacultyResponseVO.builder()
                     .id(faculty.getId())
                     .facultyName(faculty.getFacultyName())
-                    .facultyRegNumber(faculty.getFacultyRegNumber())
+                    .facultyId(faculty.getFacultyId())
                     .build();
             facultyResponseVOList.add(f);
         }
@@ -40,7 +40,7 @@ public class FacultyService {
         Faculty retrievedFaculty = facultyRepository.getById(id);
 
         retrievedFaculty.setFacultyName(faculty.getFacultyName());
-        retrievedFaculty.setFacultyRegNumber(faculty.getFacultyRegNumber());
+        retrievedFaculty.setFacultyId(faculty.getFacultyId());
         retrievedFaculty.setEmail(faculty.getEmail());
         retrievedFaculty.setDateOfBirth(faculty.getDateOfBirth());
         retrievedFaculty.setQualification(faculty.getQualification());

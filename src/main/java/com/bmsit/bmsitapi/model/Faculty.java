@@ -22,7 +22,7 @@ public class Faculty {
 
     private String facultyName;
 
-    private String facultyRegNumber;
+    private String facultyId;
 
     private String email;
 
@@ -43,10 +43,7 @@ public class Faculty {
 
     private String designation;
 
-    @OneToMany(mappedBy = "faculty", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @ElementCollection
+    @Embedded
     private List<Address> address;
-
-    @ManyToOne
-    @JoinColumn(name = "department_id")
-    private Department department;
 }

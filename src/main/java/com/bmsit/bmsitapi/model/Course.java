@@ -18,10 +18,9 @@ import javax.persistence.Id;
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private int courseId;
     private String courseName;
     private String code;
-    private int duration;
-
-   // private Department department;
+    private int durationInYears;
+    private String department;
 }

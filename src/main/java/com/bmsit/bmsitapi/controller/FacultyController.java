@@ -30,7 +30,7 @@ public class FacultyController {
         FacultyResponseVO facultyResponseVO = FacultyResponseVO.builder()
                 .id(faculty.getId())
                 .facultyName(faculty.getFacultyName())
-                .facultyRegNumber(faculty.getFacultyRegNumber())
+                .facultyId(faculty.getFacultyId())
                 .build();
         return new ResponseEntity<>(facultyResponseVO, HttpStatus.OK);
     }
@@ -41,7 +41,7 @@ public class FacultyController {
         FacultyResponseVO facultyResponseVO = FacultyResponseVO.builder()
                 .id(savedFaculty.getId())
                 .facultyName(savedFaculty.getFacultyName())
-                .facultyRegNumber(savedFaculty.getFacultyRegNumber())
+                .facultyId(savedFaculty.getFacultyId())
                 .build();
         return new ResponseEntity<>(facultyResponseVO, HttpStatus.CREATED);
     }
@@ -52,7 +52,7 @@ public class FacultyController {
         FacultyResponseVO facultyResponseVO = FacultyResponseVO.builder()
                 .id(savedFaculty.getId())
                 .facultyName(savedFaculty.getFacultyName())
-                .facultyRegNumber(savedFaculty.getFacultyRegNumber())
+                .facultyId(savedFaculty.getFacultyId())
                 .build();
         return new ResponseEntity<>(facultyResponseVO, HttpStatus.OK);
     }

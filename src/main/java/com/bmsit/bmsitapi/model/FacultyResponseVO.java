@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class FacultyResponseVO {
     private int id;
     private String facultyName;
-    private String facultyRegNumber;
+    private String facultyId;
 
 }
