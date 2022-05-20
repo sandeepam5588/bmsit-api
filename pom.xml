@@ -14,7 +14,7 @@
 	<name>bmsit-api</name>
 	<description>RESTful API for BMSIT College</description>
 	<properties>
-		<java.version>16</java.version>
+		<java.version>11</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -50,6 +50,19 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.github.fge/json-patch -->
+		<dependency>
+			<groupId>com.github.fge</groupId>
+			<artifactId>json-patch</artifactId>
+			<version>1.9</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310 -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+			<version>2.13.3</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

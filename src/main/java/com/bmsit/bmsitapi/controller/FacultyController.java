@@ -3,6 +3,12 @@ package com.bmsit.bmsitapi.controller;
 import com.bmsit.bmsitapi.model.Faculty;
 import com.bmsit.bmsitapi.model.FacultyResponseVO;
 import com.bmsit.bmsitapi.service.FacultyService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.github.fge.jsonpatch.JsonPatch;
+import com.github.fge.jsonpatch.JsonPatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +23,24 @@ public class FacultyController {
 
     @Autowired
     private FacultyService facultyService;
+
+    /**
+     * To register the JavaTime Module
+     *
+     * you can register like this
+     *
+     * ObjectMapper mapper = new ObjectMapper();
+     * mapper.registerModule(new JavaTimeModule());
+     *
+     * or like this
+     *
+     * ObjectMapper objectMapper = JsonMapper.builder()
+     *             .findAndAddModules()
+     *             .build();
+     */
+    ObjectMapper objectMapper = JsonMapper.builder()
+            .findAndAddModules()
+            .build();
 
     @GetMapping(value = "/faculty", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<FacultyResponseVO> getAllFaculty(){
@@ -58,8 +82,30 @@ public class FacultyController {
     }
 
     @DeleteMapping(value = "/faculty/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> deleteFaculty(int id){
+    public ResponseEntity<String> deleteFaculty(@PathVariable(name = "id") int id){
         facultyService.deleteFaculty(id);
         return new ResponseEntity<>("resource deleted successfully", HttpStatus.OK);
+    }
+
+    @PatchMapping(value = "/faculty/{id}", consumes = "application/json-patch+json")
+    public ResponseEntity<FacultyResponseVO> updateFacultyField(@PathVariable(name = "id") int id, @RequestBody JsonPatch patch){
+        try {
+            Faculty faculty = facultyService.getFaculty(id);
+            Faculty facultyPatched = applyPatchToFaculty(patch, faculty);
+            facultyService.updateFaculty(id, facultyPatched);
+            FacultyResponseVO facultyResponseVO = FacultyResponseVO.builder()
+                    .id(facultyPatched.getId())
+                    .facultyName(facultyPatched.getFacultyName())
+                    .facultyId(facultyPatched.getFacultyId())
+                    .build();
+            return new ResponseEntity<>(facultyResponseVO, HttpStatus.OK);
+        }catch (JsonPatchException | JsonProcessingException e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    private Faculty applyPatchToFaculty(JsonPatch patch, Faculty targetFaculty)throws JsonPatchException, JsonProcessingException {
+        JsonNode patched = patch.apply(objectMapper.convertValue(targetFaculty, JsonNode.class));
+        return objectMapper.treeToValue(patched, Faculty.class);
     }
 }
