@@ -15,7 +15,7 @@
 	<description>RESTful API for BMSIT College</description>
 
 	<properties>
-		<java.version>16</java.version>
+		<java.version>17</java.version>
 	</properties>
 
 	<dependencies>
@@ -89,7 +89,6 @@
 					<source>${java.version}</source>
 					<target>${java.version}</target>
 					<encoding>UTF-8</encoding>
-					<release>17</release>
 				</configuration>
 			</plugin>
 		</plugins>
