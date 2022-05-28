@@ -47,3 +47,10 @@ public class Faculty {
     @Embedded
     private List<Address> address;
 }
+
+/**
+ * With the @Valid annotation we ensure that the data fits the validation rules.
+ * @PostMapping(value = "/cities", consumes = MediaType.APPLICATION_JSON_VALUE,
+ *         produces = MediaType.APPLICATION_JSON_VALUE)
+ * public City createCity(@RequestBody @Valid City city) {
+ */

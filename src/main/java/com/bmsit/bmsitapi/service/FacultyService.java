@@ -1,5 +1,6 @@
 package com.bmsit.bmsitapi.service;
 
+import com.bmsit.bmsitapi.exceptions.FacultyNotFoundException;
 import com.bmsit.bmsitapi.model.Faculty;
 import com.bmsit.bmsitapi.model.FacultyResponseVO;
 import com.bmsit.bmsitapi.repository.FacultyRepository;
@@ -28,16 +29,16 @@ public class FacultyService {
         return facultyResponseVOList;
     }
 
-    public Faculty getFaculty(int id) {
-        return facultyRepository.findById(id).get();
+    public Faculty getFaculty(int id) throws FacultyNotFoundException {
+        return facultyRepository.findById(id).orElseThrow(() -> new FacultyNotFoundException(id));
     }
 
     public Faculty createFaculty(Faculty faculty) {
         return facultyRepository.save(faculty);
     }
 
-    public Faculty updateFaculty(int id, Faculty faculty) {
-        Faculty retrievedFaculty = facultyRepository.getById(id);
+    public Faculty updateFaculty(int id, Faculty faculty) throws FacultyNotFoundException {
+        Faculty retrievedFaculty = facultyRepository.findById(id).orElseThrow(() -> new FacultyNotFoundException(id));
 
         retrievedFaculty.setFacultyName(faculty.getFacultyName());
         retrievedFaculty.setFacultyId(faculty.getFacultyId());

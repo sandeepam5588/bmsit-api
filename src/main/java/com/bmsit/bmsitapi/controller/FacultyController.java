@@ -1,5 +1,6 @@
 package com.bmsit.bmsitapi.controller;
 
+import com.bmsit.bmsitapi.exceptions.FacultyNotFoundException;
 import com.bmsit.bmsitapi.model.Faculty;
 import com.bmsit.bmsitapi.model.FacultyResponseVO;
 import com.bmsit.bmsitapi.service.FacultyService;
@@ -49,7 +50,7 @@ public class FacultyController {
     }
 
     @GetMapping(value = "/faculty/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<FacultyResponseVO> getFaculty(@PathVariable(name = "id") int id){
+    public ResponseEntity<FacultyResponseVO> getFaculty(@PathVariable(name = "id") int id) throws FacultyNotFoundException {
         Faculty faculty = facultyService.getFaculty(id);
         FacultyResponseVO facultyResponseVO = FacultyResponseVO.builder()
                 .id(faculty.getId())
@@ -71,7 +72,7 @@ public class FacultyController {
     }
 
     @PutMapping(value = "/faculty/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<FacultyResponseVO> updateFaculty(@PathVariable(name = "id") int id, @RequestBody Faculty faculty){
+    public ResponseEntity<FacultyResponseVO> updateFaculty(@PathVariable(name = "id") int id, @RequestBody Faculty faculty) throws FacultyNotFoundException {
         Faculty savedFaculty = facultyService.updateFaculty(id, faculty);
         FacultyResponseVO facultyResponseVO = FacultyResponseVO.builder()
                 .id(savedFaculty.getId())
@@ -99,7 +100,7 @@ public class FacultyController {
                     .facultyId(facultyPatched.getFacultyId())
                     .build();
             return new ResponseEntity<>(facultyResponseVO, HttpStatus.OK);
-        }catch (JsonPatchException | JsonProcessingException e){
+        }catch (JsonPatchException | JsonProcessingException | FacultyNotFoundException e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
