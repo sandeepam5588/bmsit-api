@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -61,7 +62,7 @@ public class FacultyController {
     }
 
     @PostMapping(value = "/faculty", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<FacultyResponseVO> createFaculty(@RequestBody Faculty faculty){
+    public ResponseEntity<FacultyResponseVO> createFaculty(@RequestBody @Valid Faculty faculty){
         Faculty savedFaculty = facultyService.createFaculty(faculty);
         FacultyResponseVO facultyResponseVO = FacultyResponseVO.builder()
                 .id(savedFaculty.getId())
@@ -72,7 +73,7 @@ public class FacultyController {
     }
 
     @PutMapping(value = "/faculty/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<FacultyResponseVO> updateFaculty(@PathVariable(name = "id") int id, @RequestBody Faculty faculty) throws FacultyNotFoundException {
+    public ResponseEntity<FacultyResponseVO> updateFaculty(@PathVariable(name = "id") int id, @RequestBody @Valid Faculty faculty) throws FacultyNotFoundException {
         Faculty savedFaculty = facultyService.updateFaculty(id, faculty);
         FacultyResponseVO facultyResponseVO = FacultyResponseVO.builder()
                 .id(savedFaculty.getId())
