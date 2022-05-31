@@ -70,6 +70,18 @@
 			<artifactId>jackson-datatype-jsr310</artifactId>
 			<version>2.13.3</version>
 		</dependency>
+		<!--the following two dependencies are to create, parse and verify jwt-->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
+		</dependency>
+		<!-- this is required for java9 and above -->
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.0</version>
+		</dependency>
 
 	</dependencies>
 
