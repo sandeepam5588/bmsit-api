@@ -56,7 +56,8 @@ public class Faculty {
 
     private String designation;
 
-    @ElementCollection
-    @Embedded
-    private List<Address> address;
+//    @ElementCollection
+//    @Embedded
+    @OneToOne
+    private Address address;
 }

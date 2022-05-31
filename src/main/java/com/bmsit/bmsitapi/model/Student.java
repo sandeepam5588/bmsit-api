@@ -15,6 +15,8 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+
+
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,7 +37,8 @@ public class Student {
 
     private String gender;
 
-    @ElementCollection
-    @Embedded
-    private List<Address> address;
+//    @ElementCollection
+//    @Embedded
+    @OneToOne
+    private Address address;
 }
