@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Data
@@ -39,6 +38,6 @@ public class Student {
 
 //    @ElementCollection
 //    @Embedded
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 }

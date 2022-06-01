@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-@EnableJpaRepositories(basePackageClasses = UserRepository.class)
 @EnableAspectJAutoProxy
 @RestController
 @SpringBootApplication

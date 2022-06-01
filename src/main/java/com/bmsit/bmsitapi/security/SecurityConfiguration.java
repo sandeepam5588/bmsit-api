@@ -1,7 +1,6 @@
 package com.bmsit.bmsitapi.security;
 
 import com.bmsit.bmsitapi.filters.JwtRequestFilter;
-import com.bmsit.bmsitapi.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,10 +20,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private MyUserDetailsService myUserDetailsService;
+    private UserDetailsService myUserDetailsService;
+
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(myUserDetailsService);
+    }
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         //set your configuration on auth object

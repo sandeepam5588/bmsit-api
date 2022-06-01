@@ -58,6 +58,6 @@ public class Faculty {
 
 //    @ElementCollection
 //    @Embedded
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 }

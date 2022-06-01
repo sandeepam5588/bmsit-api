@@ -5,6 +5,7 @@ import com.bmsit.bmsitapi.model.Faculty;
 import com.bmsit.bmsitapi.model.FacultyResponseVO;
 import com.bmsit.bmsitapi.repository.FacultyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class FacultyService {
     @Autowired
     private FacultyRepository facultyRepository;
 
+    @PreAuthorize("hasRole('ROLE_VIEWER') or hasRole('ROLE_EDITOR')")
     public List<FacultyResponseVO> getAllFaculty() {
         List<FacultyResponseVO> facultyResponseVOList = new ArrayList<>();
 
@@ -29,14 +31,17 @@ public class FacultyService {
         return facultyResponseVOList;
     }
 
+    @PreAuthorize("hasRole('ROLE_VIEWER') or hasRole('ROLE_EDITOR')")
     public Faculty getFaculty(int id) throws FacultyNotFoundException {
         return facultyRepository.findById(id).orElseThrow(() -> new FacultyNotFoundException(id));
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_EDITOR')")
     public Faculty createFaculty(Faculty faculty) {
         return facultyRepository.save(faculty);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_EDITOR')")
     public Faculty updateFaculty(int id, Faculty faculty) throws FacultyNotFoundException {
         Faculty retrievedFaculty = facultyRepository.findById(id).orElseThrow(() -> new FacultyNotFoundException(id));
 
@@ -54,6 +59,7 @@ public class FacultyService {
         return facultyRepository.save(retrievedFaculty);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteFaculty(int id) {
         facultyRepository.deleteById(id);
     }
