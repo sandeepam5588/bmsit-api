@@ -1,6 +1,5 @@
 package com.bmsit.bmsitapi.controller;
 
-import com.bmsit.bmsitapi.constants.AuthoritiesConstants;
 import com.bmsit.bmsitapi.exceptions.FacultyNotFoundException;
 import com.bmsit.bmsitapi.model.Faculty;
 import com.bmsit.bmsitapi.model.FacultyResponseVO;
@@ -15,10 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -48,9 +45,9 @@ public class FacultyController {
             .build();
 
     @GetMapping(value = "/faculty", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<FacultyResponseVO> getAllFaculty(){
+    public ResponseEntity<List<FacultyResponseVO>> getAllFaculty(){
         List<FacultyResponseVO> facultiesList = facultyService.getAllFaculty();
-        return new ResponseEntity(facultiesList, HttpStatus.OK);
+        return  ResponseEntity.ok(facultiesList);
     }
 
     @GetMapping(value = "/faculty/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -64,7 +61,6 @@ public class FacultyController {
         return new ResponseEntity<>(facultyResponseVO, HttpStatus.OK);
     }
 
-    //@RolesAllowed(AuthoritiesConstants.ROLE_ADMIN)
     @PostMapping(value = "/faculty", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<FacultyResponseVO> createFaculty(@RequestBody @Valid Faculty faculty){
         Faculty savedFaculty = facultyService.createFaculty(faculty);
