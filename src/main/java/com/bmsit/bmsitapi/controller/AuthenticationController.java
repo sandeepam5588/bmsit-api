@@ -52,7 +52,7 @@ public class AuthenticationController {
     }
 
     @PostMapping(value = "/admin/users", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> addApiUser(User user){
+    public ResponseEntity<User> addApiUser(@RequestBody User user){
         User savedUser =myUserDetailsService.addApiUser(user);
         return ResponseEntity.ok(savedUser);
     }

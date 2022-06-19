@@ -21,11 +21,12 @@ public class MyUserDetails implements UserDetails {
         this.password = user.getPassword();
         this.active = user.isActive();
         this.authorities = Arrays.stream(user.getRoles().split(","))
+                .map(String::trim) // this line added incase the input contains the leading and trailing spaces
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }
-    public MyUserDetails(){}
 
+    public MyUserDetails(){}
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
