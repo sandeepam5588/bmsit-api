@@ -3,6 +3,7 @@ package com.bmsit.bmsitapi;
 import com.bmsit.bmsitapi.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +24,10 @@ public class BmsitApiApplication {
 	@GetMapping(value = "/")
 	public ResponseEntity<String> welcome(){
 		return ResponseEntity.ok("Welcome to BMSIT API");
+	}
+	@Bean
+	public ModelMapper modelMapper(){
+		return new ModelMapper();
 	}
 
 }

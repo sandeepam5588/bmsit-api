@@ -58,6 +58,11 @@
 			<artifactId>lombok</artifactId>
 			<version>1.18.24</version>
 		</dependency>
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>3.0.0</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.github.fge/json-patch -->
 		<dependency>
 			<groupId>com.github.fge</groupId>

@@ -1,6 +1,7 @@
 package com.bmsit.bmsitapi.exceptions.handler;
 
 import com.bmsit.bmsitapi.exceptions.FacultyNotFoundException;
+import com.bmsit.bmsitapi.exceptions.JsonConversionError;
 import com.bmsit.bmsitapi.exceptions.RecordNotFoundException;
 import com.bmsit.bmsitapi.model.ErrorResponse;
 import org.springframework.http.HttpHeaders;
@@ -41,6 +42,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorResponse response = new ErrorResponse(LocalDateTime.now(), e.getMessage(), "please provide the valid id");
         return new ResponseEntity(response, HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler(JsonConversionError.class)
 
     /**
      *

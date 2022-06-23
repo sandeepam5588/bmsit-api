@@ -36,8 +36,6 @@ public class Student {
 
     private String gender;
 
-//    @ElementCollection
-//    @Embedded
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 }
