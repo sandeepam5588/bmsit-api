@@ -1,6 +1,7 @@
 package com.bmsit.bmsitapi.controller;
 
 import com.bmsit.bmsitapi.dto.StudentDTO;
+import com.bmsit.bmsitapi.exceptions.RecordNotFoundException;
 import com.bmsit.bmsitapi.service.StudentService;
 import com.github.fge.jsonpatch.JsonPatch;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,25 +24,25 @@ public class StudentController {
     }
 
     @GetMapping(value = "/student/{id}")
-    public ResponseEntity<StudentDTO> getStudent(@PathVariable(name = "id") int id){
+    public ResponseEntity<StudentDTO> getStudent(@PathVariable(name = "id") int id) throws RecordNotFoundException {
         StudentDTO fetchedStudent = studentService.getStudent(id);
         return new ResponseEntity<>(fetchedStudent, HttpStatus.OK);
     }
 
     @PutMapping(value = "/student/{id}")
-    public ResponseEntity<StudentDTO> updateStudent(@RequestBody StudentDTO studentDTO, @PathVariable(name = "id") int id){
+    public ResponseEntity<StudentDTO> updateStudent(@RequestBody StudentDTO studentDTO, @PathVariable(name = "id") int id) throws RecordNotFoundException {
         StudentDTO updatedStudent = studentService.updateStudent(studentDTO, id);
         return new ResponseEntity<>(updatedStudent, HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping(value = "/student/{id}")
-    public ResponseEntity<String> deleteStudent(@PathVariable(name = "id") int id){
+    public ResponseEntity<String> deleteStudent(@PathVariable(name = "id") int id) throws RecordNotFoundException {
         studentService.deleteStudent(id);
         return new ResponseEntity<>("Record deleted successfully", HttpStatus.NO_CONTENT);
     }
 
     @PatchMapping(value = "/student/{id}")
-    public ResponseEntity<StudentDTO> updateStudentField(@PathVariable(name = "id") int id, @RequestBody JsonPatch patch){
+    public ResponseEntity<StudentDTO> updateStudentField(@PathVariable(name = "id") int id, @RequestBody JsonPatch patch) throws RecordNotFoundException {
         StudentDTO patchedStudent = studentService.patchStudent(id, patch);
         return new ResponseEntity<>(patchedStudent, HttpStatus.OK);
     }

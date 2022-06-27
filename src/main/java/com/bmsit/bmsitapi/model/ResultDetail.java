@@ -14,7 +14,7 @@ public class ResultDetail {
     private int resultDetailId;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfAnnouncement;
-    private String academicYear;
+    private int academicYear;
     private int semester;
     private String course;
     private String department;

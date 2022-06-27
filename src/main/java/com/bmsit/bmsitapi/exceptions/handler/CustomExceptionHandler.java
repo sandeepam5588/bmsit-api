@@ -1,6 +1,5 @@
 package com.bmsit.bmsitapi.exceptions.handler;
 
-import com.bmsit.bmsitapi.exceptions.FacultyNotFoundException;
 import com.bmsit.bmsitapi.exceptions.JsonConversionError;
 import com.bmsit.bmsitapi.exceptions.RecordNotFoundException;
 import com.bmsit.bmsitapi.model.ErrorResponse;
@@ -19,30 +18,6 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
-
-    private String  NO_RECORDS_FOUND = "NO_RECORDS_FOUND";
-    private String BAD_REQUEST = "BAD_REQUEST";
-
-    @ExceptionHandler(FacultyNotFoundException.class)
-    public final ResponseEntity<ErrorResponse> handleFacultyNotFoundException(FacultyNotFoundException e, WebRequest request){
-        ErrorResponse response = new ErrorResponse(
-                LocalDateTime.now(), e.getMessage(), "please provide the valid id"
-        );
-
-        return new ResponseEntity(response, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(NoSuchElementException.class)
-    public final ResponseEntity<ErrorResponse> handleNoSuchElementException(NoSuchElementException e, WebRequest request) {
-//        Map<String, Object> body = new LinkedHashMap<>();
-//        body.put("timestamp", LocalDateTime.now());
-//        body.put("message", "No record found");
-//
-//        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
-        ErrorResponse response = new ErrorResponse(LocalDateTime.now(), e.getMessage(), "please provide the valid id");
-        return new ResponseEntity(response, HttpStatus.NOT_FOUND);
-    }
-    @ExceptionHandler(JsonConversionError.class)
 
     /**
      *
@@ -66,4 +41,25 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         body.put("errors", errors);
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(RecordNotFoundException.class)
+    public final ResponseEntity<ErrorResponse> handleFacultyNotFoundException(RecordNotFoundException e, WebRequest request){
+        ErrorResponse response = new ErrorResponse(
+                LocalDateTime.now(), e.getMessage(), "please provide the valid id"
+        );
+        return new ResponseEntity(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public final ResponseEntity<ErrorResponse> handleNoSuchElementException(NoSuchElementException e, WebRequest request) {
+        ErrorResponse response = new ErrorResponse(LocalDateTime.now(), e.getMessage(), "please provide the valid id");
+        return new ResponseEntity(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(JsonConversionError.class)
+    public final ResponseEntity<ErrorResponse> handleJsonConversionError(JsonConversionError e, WebRequest request) {
+        ErrorResponse response = new ErrorResponse(LocalDateTime.now(), e.getMessage(), "Unable to convert JSON object to Java object");
+        return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+    }
+
 }

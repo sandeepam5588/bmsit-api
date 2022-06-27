@@ -2,7 +2,7 @@ package com.bmsit.bmsitapi.service;
 
 import com.bmsit.bmsitapi.dto.StudentDTO;
 import com.bmsit.bmsitapi.exceptions.JsonConversionError;
-import com.bmsit.bmsitapi.exceptions.StudentRecordNotFoundException;
+import com.bmsit.bmsitapi.exceptions.RecordNotFoundException;
 import com.bmsit.bmsitapi.model.Student;
 import com.bmsit.bmsitapi.repository.StudentRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -29,26 +29,26 @@ public class StudentService {
         return modelMapper.map(savedStudent, StudentDTO.class);
     }
 
-    public StudentDTO getStudent(int id) {
-        Student fetchedStudent = studentRepository.findById(id).orElseThrow(()-> new StudentRecordNotFoundException(id));
+    public StudentDTO getStudent(int id) throws RecordNotFoundException {
+        Student fetchedStudent = studentRepository.findById(id).orElseThrow(()-> new RecordNotFoundException(id));
         return modelMapper.map(fetchedStudent, StudentDTO.class);
     }
 
-    public StudentDTO updateStudent(StudentDTO studentDTO, int id) {
-        Student student = studentRepository.findById(id).orElseThrow(() -> new StudentRecordNotFoundException(id));
+    public StudentDTO updateStudent(StudentDTO studentDTO, int id) throws RecordNotFoundException {
+        Student student = studentRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
         Student updatedStudent = modelMapper.map(studentDTO, Student.class);
         updatedStudent.setId(id);
         studentRepository.save(updatedStudent);
         return modelMapper.map(updatedStudent, StudentDTO.class);
     }
 
-    public void deleteStudent(int id) {
-        Student student = studentRepository.findById(id).orElseThrow(()->new StudentRecordNotFoundException(id));
+    public void deleteStudent(int id) throws RecordNotFoundException {
+        Student student = studentRepository.findById(id).orElseThrow(()->new RecordNotFoundException(id));
         studentRepository.deleteById(id);
     }
 
-    public StudentDTO patchStudent(int id, JsonPatch patch)  {
-            Student student = studentRepository.findById(id).orElseThrow(()-> new StudentRecordNotFoundException(id));
+    public StudentDTO patchStudent(int id, JsonPatch patch) throws RecordNotFoundException {
+            Student student = studentRepository.findById(id).orElseThrow(()-> new RecordNotFoundException(id));
             Student studentPatched = applyPatchToStudent(patch, student);
             studentRepository.save(studentPatched);
             return modelMapper.map(studentPatched, StudentDTO.class);

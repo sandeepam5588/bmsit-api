@@ -1,6 +1,6 @@
 package com.bmsit.bmsitapi.service;
 
-import com.bmsit.bmsitapi.exceptions.FacultyNotFoundException;
+import com.bmsit.bmsitapi.exceptions.RecordNotFoundException;
 import com.bmsit.bmsitapi.model.Faculty;
 import com.bmsit.bmsitapi.model.FacultyResponseVO;
 import com.bmsit.bmsitapi.repository.FacultyRepository;
@@ -32,8 +32,8 @@ public class FacultyService {
     }
 
     @PreAuthorize("hasRole('ROLE_VIEWER') or hasRole('ROLE_EDITOR')")
-    public Faculty getFaculty(int id) throws FacultyNotFoundException {
-        return facultyRepository.findById(id).orElseThrow(() -> new FacultyNotFoundException(id));
+    public Faculty getFaculty(int id) throws RecordNotFoundException {
+        return facultyRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_EDITOR')")
@@ -42,8 +42,8 @@ public class FacultyService {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_EDITOR')")
-    public Faculty updateFaculty(int id, Faculty faculty) throws FacultyNotFoundException {
-        Faculty retrievedFaculty = facultyRepository.findById(id).orElseThrow(() -> new FacultyNotFoundException(id));
+    public Faculty updateFaculty(int id, Faculty faculty) throws RecordNotFoundException {
+        Faculty retrievedFaculty = facultyRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
 
         retrievedFaculty.setFacultyName(faculty.getFacultyName());
         retrievedFaculty.setFacultyId(faculty.getFacultyId());
